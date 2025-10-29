@@ -1,54 +1,24 @@
 import React from "react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-
-
-// Simple Swiper import
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import HeroSwiper from "./Heroswiper";
-
-
-const heroSlides = [
-  {
-    id: 1,
-    image: "https://png.pngtree.com/thumb_back/fh260/background/20240223/pngtree-happy-pet-dogs-playing-in-a-park-image_15629884.jpg",
-    title: "WarmPaws",
-    description: "Cozy outfits for your furry friends!",
-  },
-  {
-    id: 2,
-    image: "https://media.istockphoto.com/id/1059650734/photo/happy-smiling-young-golden-retriever-dog-under-light-gray-plaid-pet-warms-under-a-blanket-in.jpg?s=612x612&w=0&k=20&c=jdyuWKX_m0EqMhAK8oUw4MqBogPJF078B4LaXNXd_0M=",
-    title: "Stay Warm",
-    description: "Explore winter essentials for pets.",
-  },
-  {
-    id: 3,
-    image: "https://as2.ftcdn.net/jpg/01/11/44/17/1000_F_111441747_BcTVuZIRgd196lUFYttbZM7q58Rfop5q.jpg",
-    title: "Happy Pets",
-    description: "Keep your pets safe and happy.",
-  },
-];
 
 // Winter care tips
 const winterTips = [
   {
     id: 1,
-    title: "Keep Paws Protected",
-    description: "Use pet-safe balms to prevent cracked paws from cold weather.",
+    title: "Protect Paws",
+    description: "Apply pet-safe balms to keep paws soft and safe from the cold.",
     icon: "🐾",
   },
   {
     id: 2,
-    title: "Warm Bedding",
-    description: "Provide cozy blankets to keep your pet warm at night.",
-    icon: "🧣",
+    title: "Cozy Bedding",
+    description: "Provide warm blankets for a snug sleep during chilly nights.",
+    icon: "🛏️",
   },
   {
     id: 3,
-    title: "Balanced Diet",
-    description: "Adjust food intake to maintain energy in colder months.",
+    title: "Healthy Diet",
+    description: "Adjust meals for extra energy and warmth during winter.",
     icon: "🍲",
   },
 ];
@@ -77,70 +47,46 @@ const expertVets = [
 
 const Homepage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-purple-100 to-purple-200">
-      <HeroSwiper/>
+    <div className="min-h-screen bg-gradient-to-b from-yellow-50 via-orange-50 to-pink-50">
+      {/* Hero slider */}
+      <HeroSwiper />
+
+      {/* Popular Winter Care Services */}
       <section className="max-w-6xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-purple-900 text-center mb-10">
-          Popular Winter Care Services
+        <h2 className="text-3xl md:text-4xl font-bold text-orange-600 text-center mb-12">
+          Winter Care for Your Pets
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {winterTips.map((service) => (
+          {winterTips.map((tip) => (
             <div
-              key={service.id}
-              className="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition-transform duration-300"
+              key={tip.id}
+              className="bg-white rounded-3xl shadow-xl p-6 text-center hover:scale-105 transition-transform duration-300 border-2 border-orange-100"
             >
-              <div className="text-6xl mb-4">{service.icon}</div>
-              <h3 className="font-bold text-purple-900 text-xl mb-2">
-                {service.title}
-              </h3>
-              <p className="text-purple-800/90 text-sm mb-4">
-                {service.description}
-              </p>
-              <button className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold transition">
-                View Details
+              <div className="text-5xl mb-4">{tip.icon}</div>
+              <h3 className="text-xl font-bold text-orange-700 mb-2">{tip.title}</h3>
+              <p className="text-orange-800/90 text-sm mb-4">{tip.description}</p>
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-xl font-semibold transition">
+                Learn More
               </button>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ===== Winter Care Tips ===== */}
+      {/* Meet Our Expert Vets */}
       <section className="max-w-6xl mx-auto px-6 py-16 bg-white/50 rounded-3xl mx-6">
-        <h2 className="text-3xl font-bold text-purple-900 text-center mb-10">
-          Winter Care Tips for Pets
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {winterTips.map((tip) => (
-            <div
-              key={tip.id}
-              className="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition-transform duration-300 border-2 border-purple-100"
-            >
-              <div className="text-5xl mb-4">{tip.icon}</div>
-              <h3 className="font-bold text-purple-900 text-xl mb-2">
-                {tip.title}
-              </h3>
-              <p className="text-purple-800/90 text-sm">{tip.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ===== Meet Our Expert Vets ===== */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-purple-900 text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-green-600 text-center mb-12">
           Meet Our Expert Vets
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {expertVets.map((vet) => (
             <div
               key={vet.id}
-              className="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition-transform duration-300"
+              className="bg-white rounded-3xl shadow-xl p-6 text-center hover:scale-105 transition-transform duration-300 border-2 border-green-100"
             >
               <div className="text-6xl mb-4">{vet.icon}</div>
-              <h3 className="font-bold text-purple-900 text-xl mb-2">
-                {vet.name}
-              </h3>
-              <p className="text-purple-800/90 text-sm mb-4">{vet.specialty}</p>
+              <h3 className="text-xl font-bold text-green-700 mb-2">{vet.name}</h3>
+              <p className="text-green-800/90 text-sm mb-4">{vet.specialty}</p>
               <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
                 Contact Now
               </button>
@@ -149,11 +95,15 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* ===== Footer ===== */}
-      <footer className="text-center py-8 bg-green-50 text-purple-900 font-semibold shadow-inner mt-16">
+      {/* Footer */}
+      <footer className="text-center py-8 bg-pink-50 text-orange-600 font-semibold shadow-inner mt-16">
         <div className="max-w-6xl mx-auto">
-          <p>Developed by <span className="font-bold text-purple-600">WarmPaws Team</span></p>
-          <p className="text-sm mt-2 text-purple-700">Keeping your pets warm and happy this winter</p>
+          <p>
+            Developed by <span className="font-bold text-orange-500">WarmPaws Team</span>
+          </p>
+          <p className="text-sm mt-2 text-orange-400">
+            Keeping your pets cozy, safe, and happy all winter long
+          </p>
         </div>
       </footer>
     </div>

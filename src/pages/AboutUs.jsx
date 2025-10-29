@@ -20,19 +20,19 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-200 via-purple-300 to-pink-200 text-center px-4">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-orange-100 via-yellow-100 to-amber-200 text-center px-4">
       {/* Hero heading */}
-      <h1 className="text-5xl md:text-6xl font-bold text-white animate-bounce drop-shadow-lg mb-6">
+      <h1 className="text-5xl md:text-6xl font-bold text-amber-900 animate-bounce drop-shadow-lg mb-6">
         🐾 Winter Care is Coming Soon!
       </h1>
 
       {/* Live Clock */}
-      <h2 className="font-bold text-white text-3xl mb-5">
+      <h2 className="font-bold text-amber-800 text-3xl mb-5">
         {date.toLocaleTimeString()}
       </h2>
 
       {/* Description */}
-      <p className="mt-3 text-lg text-white/90 animate-pulse max-w-xl">
+      <p className="mt-3 text-lg text-amber-900/90 animate-pulse max-w-xl">
         Welcome to WarmPaws! We are crafting a cozy winter companion platform for
         pet owners. Stay tuned for services, tips, and expert advice to keep your
         furry friends safe and warm during winter ❄️
@@ -49,7 +49,7 @@ const AboutUs = () => {
       </div>
 
       {/* Footer credit */}
-      <div className="absolute bottom-6 text-white text-sm animate-pulse">
+      <div className="absolute bottom-6 text-amber-900 text-sm animate-pulse">
         Developed with ❤️ by <span className="font-bold">Utsho 💎</span>
       </div>
     </div>
