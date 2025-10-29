@@ -30,7 +30,7 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-800">Please log in to view your profile</h2>
         </div>
@@ -39,113 +39,89 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="px-6 py-8">
-          <div className="text-center mb-8 ">
-            <h2 className="text-3xl font-bold text-gray-900">User Profile</h2>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-lg mx-auto bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
+        <div className="px-6 py-10">
+          {/* Avatar */}
+          <div className="relative w-32 h-32 mx-auto mb-6">
+            <img
+              src={user.photoURL || 'https://via.placeholder.com/150'}
+              alt="Profile"
+              className="w-32 h-32 rounded-full border-4 border-emerald-500 object-cover shadow-lg transition-transform transform hover:scale-105"
+            />
+            {isEditing && (
+              <span className="absolute bottom-0 right-0 bg-emerald-500 text-white rounded-full p-2 cursor-pointer shadow-md">
+                ✎
+              </span>
+            )}
           </div>
 
-          {/* Current Profile Info */}
+          {/* Header */}
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">{user.displayName || 'Your Name'}</h2>
+
+          {/* Messages */}
+          {message && (
+            <div className={`p-3 rounded-md mb-4 text-center font-medium ${
+              message.includes('successfully') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+            }`}>
+              {message}
+            </div>
+          )}
+          {error && (
+            <div className="p-3 bg-red-50 text-red-800 rounded-md mb-4 text-center">{error}</div>
+          )}
+
+          {/* Profile info */}
           {!isEditing ? (
-            <div className="space-y-6">
-              <div className="text-center">
-                {user.photoURL ? (
-                  <img
-                    src={user.photoURL}
-                    alt="Profile"
-                    className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                  />
-                ) : (
-                  <div className="w-32 h-32 rounded-full bg-gray-300 mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-4xl text-gray-600">
-                      {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email?.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                )}
+            <div className="space-y-5">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-700 font-medium">Email:</span>
+                <span className="text-gray-900">{user.email}</span>
               </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Display Name</label>
-                  <p className="mt-1 text-lg text-gray-900">{user.displayName || 'Not set'}</p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Email</label>
-                  <p className="mt-1 text-lg text-gray-900">{user.email}</p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Email Verified</label>
-                  <p className={`mt-1 text-lg ${user.emailVerified ? 'text-green-600' : 'text-red-600'}`}>
-                    {user.emailVerified ? 'Verified' : 'Not Verified'}
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Account Created</label>
-                  <p className="mt-1 text-lg text-gray-900">
-                    {user.metadata?.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Unknown'}
-                  </p>
-                </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-700 font-medium">Email Verified:</span>
+                <span className={`font-semibold ${user.emailVerified ? 'text-green-600' : 'text-red-600'}`}>
+                  {user.emailVerified ? 'Verified' : 'Not Verified'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-700 font-medium">Account Created:</span>
+                <span className="text-gray-900">{user.metadata?.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Unknown'}</span>
               </div>
 
               <button
                 onClick={() => setIsEditing(true)}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
+                className="w-full mt-6 py-2 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-semibold shadow-lg hover:from-teal-500 hover:to-emerald-500 transition-all duration-300"
               >
                 Edit Profile
               </button>
             </div>
           ) : (
-            /* Edit Profile Form */
-            <form onSubmit={handleUpdateProfile} className="space-y-6">
-              {message && (
-                <div className={`p-3 rounded-md ${message.includes('successfully') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
-                  {message}
-                </div>
-              )}
-
-              {error && (
-                <div className="p-3 bg-red-50 text-red-800 rounded-md">
-                  {error}
-                </div>
-              )}
-
+            <form onSubmit={handleUpdateProfile} className="space-y-5">
               <div>
-                <label htmlFor="displayName" className="block text-sm font-medium text-gray-700">
-                  Display Name
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Display Name</label>
                 <input
                   type="text"
-                  id="displayName"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-black"
-                  placeholder="Enter your display name"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
-
               <div>
-                <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700">
-                  Photo URL
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
                 <input
                   type="url"
-                  id="photoURL"
                   value={photoURL}
                   onChange={(e) => setPhotoURL(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-black"
-                  placeholder="Enter photo URL"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
 
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 mt-4">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 transition duration-200"
+                  className="flex-1 py-2 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-semibold shadow-lg hover:from-teal-500 hover:to-emerald-500 transition-all duration-300 disabled:opacity-50"
                 >
                   {loading ? 'Updating...' : 'Update Profile'}
                 </button>
@@ -153,7 +129,7 @@ const Profile = () => {
                   type="button"
                   onClick={handleCancel}
                   disabled={loading}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 transition duration-200"
+                  className="flex-1 py-2 px-4 bg-gray-300 text-gray-700 rounded-full font-semibold shadow hover:bg-gray-400 transition-all duration-300 disabled:opacity-50"
                 >
                   Cancel
                 </button>

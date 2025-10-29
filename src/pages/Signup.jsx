@@ -73,9 +73,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-20px)] flex items-center justify-center bg-gradient-to-br from-emerald-100 via-teal-100 to-sky-100">
+    <div
+      className="min-h-[calc(100vh-20px)] flex items-center justify-center bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://thumbs.dreamstime.com/z/doodle-grey-big-small-paw-print-doodle-grey-big-small-paw-print-seamless-fabric-design-repeated-pattern-grey-185254359.jpg')",
+      }}
+    >
       <MyContainer>
-        <div className="max-w-md w-full bg-white/80 backdrop-blur-md border border-emerald-200 shadow-2xl rounded-2xl p-8">
+        <div className="max-w-md w-full bg-white/70 backdrop-blur-md border border-emerald-200 shadow-2xl rounded-2xl p-8">
           <h1 className="text-3xl font-bold text-emerald-700 text-center mb-6">Login</h1>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -120,7 +126,7 @@ const Login = () => {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition"
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-2 rounded-lg font-semibold hover:from-teal-500 hover:to-emerald-500 transition"
             >
               Login
             </button>
@@ -146,10 +152,12 @@ const Login = () => {
             Continue with Google
           </button>
 
-          <p className="text-center text-sm text-gray-700 mt-4">
-            Don’t have an account?{" "}
-            <Link to="/signup" className="text-emerald-600 font-semibold hover:underline">
-              Sign Up
+          {/* Already have account / Sign Up */}
+         
+          <p className="text-center text-sm text-gray-700 mt-2">
+            Already have an account?{" "}
+            <Link to="/login" className="text-emerald-600 font-semibold hover:underline">
+              Sign In
             </Link>
           </p>
         </div>
