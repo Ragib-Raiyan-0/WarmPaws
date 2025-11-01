@@ -30,14 +30,13 @@ const HeroSwiper = () => {
         {featuredServices.map((service) => (
           <SwiperSlide key={service.serviceId}>
             <div className="relative w-full h-full group overflow-hidden rounded-3xl shadow-lg">
-              {/* Background image */}
+
               <img
                 src={`${import.meta.env.BASE_URL}${service.image}`}
                 alt={service.serviceName}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-orange-900/70 via-yellow-400/40 to-transparent flex items-end rounded-3xl p-6 md:p-8 lg:p-12">
                 <div className="text-white">
                   <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 drop-shadow-lg">
