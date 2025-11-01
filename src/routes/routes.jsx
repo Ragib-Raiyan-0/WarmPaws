@@ -6,20 +6,16 @@ import Profile from "../pages/Profile";
 import Signup from "../pages/Signup";
 import Signin from "../pages/Signin";
 import PrivateRoute from "../privateRoute/PrivateRoute";
+import ServiceDetails from "../pages/ServiceDetails";
+import Services from "../pages/Services";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      {
-        index: true,
-        element: <Homepage />,
-      },
-      {
-        path: "/about-us",
-        element: <AboutUs />,
-      },
+      { index: true, element: <Homepage /> },
+      { path: "/about-us", element: <AboutUs /> },
       {
         path: "/profile",
         element: (
@@ -29,13 +25,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/signup",
-        element: <Signup />,
+        path: "/service/:id",
+        element: (
+          <PrivateRoute>
+            <ServiceDetails />
+          </PrivateRoute>
+        ),
       },
-      {
-        path: "/signin",
-        element: <Signin />,
-      },
+      { path: "/signup", element: <Signup /> },
+      { path: "/signin", element: <Signin /> },
+      {path: "/service", element: <Services />}
     ],
   },
 ]);

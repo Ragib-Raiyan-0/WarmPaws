@@ -1,24 +1,29 @@
-import { useContext, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { useState, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router"; // ✅ react-router-dom
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { toast } from "react-toastify";
 import MyContainer from "../components/MyContainer";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthProvider"; // ✅ use hook
 
 const Login = () => {
   const [show, setShow] = useState(false);
-  const { signInWithEmailAndPasswordFunc, signInWithGoogleFunc, sendPassResetEmailFunc, setUser, setLoading, user } = useContext(AuthContext);
+  const {
+    signInWithEmailAndPasswordFunc,
+    signInWithGoogleFunc,
+    sendPassResetEmailFunc,
+    setUser,
+    user,
+  } = useAuth(); // ✅ hook instead of useContext
 
   const location = useLocation();
-  const from = location.state?.from || "/";
+  const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
-
   const emailRef = useRef(null);
 
   // Redirect if already logged in
   if (user) {
-    navigate("/");
+    navigate(from, { replace: true });
     return null;
   }
 
@@ -29,7 +34,6 @@ const Login = () => {
 
     try {
       const res = await signInWithEmailAndPasswordFunc(email, password);
-      setLoading(false);
 
       if (!res.user.emailVerified) {
         toast.error("Please verify your email first!");
@@ -38,7 +42,7 @@ const Login = () => {
 
       setUser(res.user);
       toast.success("Welcome back! 🐾");
-      navigate(from);
+      navigate(from, { replace: true });
     } catch (err) {
       toast.error(err.message);
     }
@@ -47,10 +51,9 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       const res = await signInWithGoogleFunc();
-      setLoading(false);
       setUser(res.user);
       toast.success("Welcome with Google! 🐶");
-      navigate(from);
+      navigate(from, { replace: true });
     } catch (err) {
       toast.error(err.message);
     }
@@ -65,7 +68,6 @@ const Login = () => {
 
     try {
       await sendPassResetEmailFunc(email);
-      setLoading(false);
       toast.success("Check your inbox to reset your password 🐾");
     } catch (err) {
       toast.error(err.message);
@@ -152,12 +154,11 @@ const Login = () => {
             Continue with Google
           </button>
 
-          {/* Already have account / Sign Up */}
-         
+          {/* Sign Up Link */}
           <p className="text-center text-sm text-gray-700 mt-2">
-            Already have an account?{" "}
-            <Link to="/login" className="text-emerald-600 font-semibold hover:underline">
-              Sign In
+            Don’t have an account?{" "}
+            <Link to="/signup" className="text-emerald-600 font-semibold hover:underline">
+              Sign Up
             </Link>
           </p>
         </div>

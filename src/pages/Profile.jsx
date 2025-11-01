@@ -1,38 +1,48 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthProvider";
 
 const Profile = () => {
-  const { user, updateProfileFunc, loading, error, clearError } = useContext(AuthContext);
-  const [displayName, setDisplayName] = useState(user?.displayName || '');
-  const [photoURL, setPhotoURL] = useState(user?.photoURL || '');
+  const { user, updateProfileFunc, loading, error, clearError } = useAuth();
+  const [displayName, setDisplayName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+
+  // Initialize form with user data
+  useEffect(() => {
+    if (user) {
+      setDisplayName(user.displayName || "");
+      setPhotoURL(user.photoURL || "");
+    }
+  }, [user]);
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
       await updateProfileFunc(displayName, photoURL);
-      setMessage('Profile updated successfully!');
+      setMessage("Profile updated successfully!");
       setIsEditing(false);
-      clearError();
+      clearError && clearError();
     } catch (err) {
-      setMessage('Failed to update profile');
+      setMessage("Failed to update profile");
     }
   };
 
   const handleCancel = () => {
-    setDisplayName(user?.displayName || '');
-    setPhotoURL(user?.photoURL || '');
+    setDisplayName(user?.displayName || "");
+    setPhotoURL(user?.photoURL || "");
     setIsEditing(false);
-    setMessage('');
-    clearError();
+    setMessage("");
+    clearError && clearError();
   };
 
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800">Please log in to view your profile</h2>
+          <h2 className="text-2xl font-bold text-gray-800">
+            Please log in to view your profile
+          </h2>
         </div>
       </div>
     );
@@ -45,30 +55,33 @@ const Profile = () => {
           {/* Avatar */}
           <div className="relative w-32 h-32 mx-auto mb-6">
             <img
-              src={user.photoURL || 'https://via.placeholder.com/150'}
+              src={user.photoURL || "https://via.placeholder.com/150"}
               alt="Profile"
               className="w-32 h-32 rounded-full border-4 border-emerald-500 object-cover shadow-lg transition-transform transform hover:scale-105"
             />
-            {isEditing && (
-              <span className="absolute bottom-0 right-0 bg-emerald-500 text-white rounded-full p-2 cursor-pointer shadow-md">
-                ✎
-              </span>
-            )}
           </div>
 
           {/* Header */}
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">{user.displayName || 'Your Name'}</h2>
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
+            {user.displayName || "Your Name"}
+          </h2>
 
           {/* Messages */}
           {message && (
-            <div className={`p-3 rounded-md mb-4 text-center font-medium ${
-              message.includes('successfully') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
-            }`}>
+            <div
+              className={`p-3 rounded-md mb-4 text-center font-medium ${
+                message.includes("successfully")
+                  ? "bg-green-50 text-green-800"
+                  : "bg-red-50 text-red-800"
+              }`}
+            >
               {message}
             </div>
           )}
           {error && (
-            <div className="p-3 bg-red-50 text-red-800 rounded-md mb-4 text-center">{error}</div>
+            <div className="p-3 bg-red-50 text-red-800 rounded-md mb-4 text-center">
+              {error}
+            </div>
           )}
 
           {/* Profile info */}
@@ -80,13 +93,21 @@ const Profile = () => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-700 font-medium">Email Verified:</span>
-                <span className={`font-semibold ${user.emailVerified ? 'text-green-600' : 'text-red-600'}`}>
-                  {user.emailVerified ? 'Verified' : 'Not Verified'}
+                <span
+                  className={`font-semibold ${
+                    user.emailVerified ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {user.emailVerified ? "Verified" : "Not Verified"}
                 </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-700 font-medium">Account Created:</span>
-                <span className="text-gray-900">{user.metadata?.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Unknown'}</span>
+                <span className="text-gray-900">
+                  {user.metadata?.creationTime
+                    ? new Date(user.metadata.creationTime).toLocaleDateString()
+                    : "Unknown"}
+                </span>
               </div>
 
               <button
@@ -99,7 +120,9 @@ const Profile = () => {
           ) : (
             <form onSubmit={handleUpdateProfile} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Display Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Display Name
+                </label>
                 <input
                   type="text"
                   value={displayName}
@@ -108,7 +131,9 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Photo URL
+                </label>
                 <input
                   type="url"
                   value={photoURL}
@@ -123,7 +148,7 @@ const Profile = () => {
                   disabled={loading}
                   className="flex-1 py-2 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-semibold shadow-lg hover:from-teal-500 hover:to-emerald-500 transition-all duration-300 disabled:opacity-50"
                 >
-                  {loading ? 'Updating...' : 'Update Profile'}
+                  {loading ? "Updating..." : "Update Profile"}
                 </button>
                 <button
                   type="button"

@@ -1,86 +1,89 @@
-import React, { useContext, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import React, { useState, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router"; // ✅ react-router-dom
 import MyContainer from "../components/MyContainer";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthProvider";
 
 const Signin = () => {
   const [show, setShow] = useState(false);
   const {
     signInWithEmailAndPasswordFunc,
-    signInWithGoogleFunc, // fixed
+    signInWithGoogleFunc,
     signInWithGithubFunc,
     sendPassResetEmailFunc,
-    setLoading,
     setUser,
     user,
-  } = useContext(AuthContext);
+    loading,
+    setLoading,
+  } = useAuth(); // ✅ use the hook
 
   const location = useLocation();
-  const from = location.state || "/";
+  const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
   const emailRef = useRef(null);
 
   if (user) {
-    navigate("/");
+    navigate(from, { replace: true });
     return null;
   }
 
-  const handleSignin = (e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
     const email = e.target.email?.value;
     const password = e.target.password?.value;
 
-    signInWithEmailAndPasswordFunc(email, password)
-      .then((res) => {
-        setLoading(false);
-        if (!res.user?.emailVerified) {
-          toast.error("Please verify your email first!");
-          return;
-        }
-        setUser(res.user);
-        toast.success("Welcome back! 🐾");
-        navigate(from);
-      })
-      .catch((e) => toast.error(e.message));
+    try {
+      const res = await signInWithEmailAndPasswordFunc(email, password);
+      setUser(res.user);
+
+      if (!res.user.emailVerified) {
+        toast.error("Please verify your email first!");
+        return;
+      }
+
+      toast.success("Welcome back! 🐾");
+      navigate(from, { replace: true });
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
-  const handleGoogleSignin = () => {
-    signInWithGoogleFunc() // fixed
-      .then((res) => {
-        setLoading(false);
-        setUser(res.user);
-        toast.success("Welcome with Google! 🐶");
-        navigate(from);
-      })
-      .catch((e) => toast.error(e.message));
+  const handleGoogleSignin = async () => {
+    try {
+      const res = await signInWithGoogleFunc();
+      setUser(res.user);
+      toast.success("Welcome with Google! 🐶");
+      navigate(from, { replace: true });
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
-  const handleGithubSignin = () => {
-    signInWithGithubFunc()
-      .then((res) => {
-        setLoading(false);
-        setUser(res.user);
-        toast.success("Welcome with GitHub! 🐱");
-        navigate(from);
-      })
-      .catch((e) => toast.error(e.message));
+  const handleGithubSignin = async () => {
+    try {
+      const res = await signInWithGithubFunc();
+      setUser(res.user);
+      toast.success("Welcome with GitHub! 🐱");
+      navigate(from, { replace: true });
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
-  const handleForgetPassword = () => {
+  const handleForgetPassword = async () => {
     const email = emailRef.current.value;
     if (!email) {
       toast.error("Please enter your email first!");
       return;
     }
-    sendPassResetEmailFunc(email)
-      .then(() => {
-        setLoading(false);
-        toast.success("Check your inbox to reset your password 🐾");
-      })
-      .catch((e) => toast.error(e.message));
+    try {
+      await sendPassResetEmailFunc(email);
+      toast.success("Check your inbox to reset your password 🐾");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -94,8 +97,8 @@ const Signin = () => {
               Welcome Back, Pet Lover! 🐾
             </h1>
             <p className="text-gray-600 text-lg leading-relaxed">
-              Sign in to continue caring for your furry friends.  
-              Manage appointments, track health, and get tips for happy paws.
+              Sign in to continue caring for your furry friends. Manage
+              appointments, track health, and get tips for happy paws.
             </p>
           </div>
 
@@ -106,9 +109,7 @@ const Signin = () => {
               </h2>
 
               <div>
-                <label className="block text-sm mb-1 text-emerald-800">
-                  Email
-                </label>
+                <label className="block text-sm mb-1 text-emerald-800">Email</label>
                 <input
                   type="email"
                   name="email"
@@ -119,9 +120,7 @@ const Signin = () => {
               </div>
 
               <div className="relative">
-                <label className="block text-sm mb-1 text-emerald-800">
-                  Password
-                </label>
+                <label className="block text-sm mb-1 text-emerald-800">Password</label>
                 <input
                   type={show ? "text" : "password"}
                   name="password"
