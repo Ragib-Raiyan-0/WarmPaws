@@ -73,3 +73,25 @@ Sign in to access your profile and make bookings.
 License
 
 This project is licensed under the MIT License.
+
+
+Packages:
+@tailwindcss/vite – Tailwind plugin for Vite
+
+firebase – Firebase SDK for authentication, database, etc.
+
+react – React library
+
+react-dom – React DOM library for rendering components
+
+react-icons – Collection of popular icon packs for React
+
+react-router – React Router for routing
+
+react-spinners – Loading spinners for React
+
+react-toastify – Toast notifications for React
+
+swiper – Modern slider/carousel library
+
+tailwindcss – Utility-first CSS framework
