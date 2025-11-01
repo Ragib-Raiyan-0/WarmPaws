@@ -1,4 +1,4 @@
-import { Link } from "react-router"; // ✅ react-router-dom
+import { Link } from "react-router"; 
 import logo from "../assets/img/logo.png";
 import MyContainer from "./MyContainer";
 import MyLink from "./MyLink";
