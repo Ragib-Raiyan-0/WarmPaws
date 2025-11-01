@@ -1,46 +1,75 @@
-# 🔥 Firebase Fighter
+WarmPaws 🐾
+Project Overview
 
-[Live Demo 🚀](https://firebase-fighter.netlify.app/)
+WarmPaws is a cozy winter companion platform for pet owners. The platform helps users ensure their furry friends stay warm, safe, and healthy during the cold season. Users can explore local pet care services, winter pet clothing, grooming options, and expert tips — all in one friendly interface.
 
-Firebase Fighter is a web app that showcases integration with Firebase services like Authentication, Firestore, and Hosting using Vite + React.
+Purpose
 
----
+The main goal of WarmPaws is to make winter pet care easier and more organized. Pet owners can:
 
-## 📦 Tech Stack
+Discover nearby pet care services.
 
-- **Vite**
-- **React**
-- **Firebase**
-  - Authentication
+Book services directly online.
 
----
+Track their pets’ health and appointments.
 
-## 🛠️ Getting Started
+Access expert advice and seasonal tips to keep pets safe and happy.
 
-### 1. Clone the repo
+Key Features
 
-```bash
-git clone https://github.com/habib-utsho/Firebase-fighter
-cd firebase-fighter
-```
+User Authentication: Sign up and sign in using email/password, Google, or GitHub.
 
-## 2. Install dependencies
+Protected Pages: Certain pages like Profile and Service Details are private and require login.
+
+Service Listings: Browse winter pet care services with details like provider info, price, and ratings.
+
+Service Booking: Users can fill out a form to book a selected service.
+
+Responsive Design: Mobile-first, fully responsive interface.
+
+Theme Support: Light and dark theme toggling with local storage persistence.
+
+Notifications: Friendly alerts using toast notifications for actions like login, booking, and errors.
+
+Tech Stack
+
+Frontend: React, Tailwind CSS, React Icons, React Router
+
+Authentication: Firebase Auth (Email/Password, Google, GitHub)
+
+Notifications: React Toastify
+
+Installation
+
+Clone the repository:
+
+git clone https://github.com/yourusername/warm-paws.git
+
+
+Navigate to the project folder:
+
+cd warm-paws
+
+
+Install dependencies:
+
 npm install
 
-## 3. Create .env file
 
-Create a .env file in the root directory and add your Firebase configuration:
-```
-VITE_apiKey=your_api_key
-VITE_authDomain=your_auth_domain
-VITE_projectId=your_project_id
-VITE_storageBucket=your_storage_bucket
-VITE_messagingSenderId=your_messaging_sender_id
-VITE_appId=your_app_id
-```
+Create a .env file and add Firebase configuration keys.
 
-⚠️ Important: Never share your actual API keys publicly unless your Firebase security rules are properly configured!
+Start the development server:
 
-## 4. Run the development server
 npm run dev
 
+Usage
+
+Navigate the homepage to explore pet care services.
+
+Click “Learn More” on any service card to view detailed information and book a service.
+
+Sign in to access your profile and make bookings.
+
+License
+
+This project is licensed under the MIT License.
