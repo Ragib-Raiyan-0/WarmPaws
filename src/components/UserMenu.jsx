@@ -9,10 +9,6 @@ const UserMenu = ({ user, loading, theme, setTheme, handleSignout }) => {
 
   return (
     <div className="flex items-center gap-4 relative">
-      {/* 🌗 Theme toggle */}
-
-
-      {/* 🧑 User Avatar or Loader */}
       {loading ? (
         <ClockLoader color="#F97316" size={25} />
       ) : user ? (
@@ -22,7 +18,7 @@ const UserMenu = ({ user, loading, theme, setTheme, handleSignout }) => {
           onMouseEnter={() => setDropdownOpen(true)}
           onMouseLeave={() => setDropdownOpen(false)}
         >
-          {/* Profile Picture */}
+
           <button className="focus:outline-none">
             <img
               src={user?.photoURL || "https://via.placeholder.com/88"}
@@ -31,7 +27,7 @@ const UserMenu = ({ user, loading, theme, setTheme, handleSignout }) => {
             />
           </button>
 
-          {/* Dropdown Menu */}
+
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 z-50 animate-fadeIn">
               <h2 className="text-lg font-semibold text-orange-600 dark:text-yellow-300">

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router"; // ✅ import useNavigate
+import { useNavigate } from "react-router";
 
 const WinterCareSection = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(3);
 
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetch("/data/services.json")
@@ -26,7 +26,7 @@ const WinterCareSection = () => {
   };
 
   const handleLearnMore = (id) => {
-    navigate(`/service/${id}`); // ✅ navigate to service details
+    navigate(`/service/${id}`); 
   };
 
   if (loading) {
@@ -75,7 +75,7 @@ const WinterCareSection = () => {
             </div>
 
             <button
-              onClick={() => handleLearnMore(service.serviceId)} // ✅ call navigate
+              onClick={() => handleLearnMore(service.serviceId)} 
               className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-xl font-semibold transition"
             >
               Learn More
